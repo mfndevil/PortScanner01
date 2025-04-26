@@ -3,6 +3,23 @@ import subprocess
 import sys
 from datetime import datetime
 
+# Common ports and their functions
+common_ports = {
+    20: "FTP Data",
+    21: "FTP Control",
+    22: "SSH",
+    23: "Telnet",
+    25: "SMTP",
+    53: "DNS",
+    80: "HTTP",
+    110: "POP3",
+    143: "IMAP",
+    443: "HTTPS",
+    3306: "MySQL",
+    3389: "RDP",
+    # Add more later
+}
+
 # Blank your screen
 subprocess.call('clear', shell=True)
 
@@ -22,11 +39,12 @@ t1 = datetime.now()
 # Also we'll do error handling
 
 try:
-    for port in range (1, 5000):
+    for port in range (1, 100):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = sock.connect_ex((remoteServerIP, port))
         if result == 0:
-            print("Port {}:   Open".format(port))
+            service = common_ports.get(port, "Unknown Service")
+            print(f"Port {port}: Open ({service})")
         sock.close()
 
 except KeyboardInterrupt:
